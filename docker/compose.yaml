@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .. # Le contexte est le dossier parent pour accéder à la racine du projet
+      dockerfile: ./docker/Dockerfile
+    container_name: laravel_app
+    ports:
+      - "8000:8000" # Accès à l'application via http://localhost:8000
+    volumes:
+      - ..:/var/www/html # Monte le répertoire parent pour accéder à tout le projet
+    networks:
+      - laravel_network
+    environment:
+      DB_CONNECTION: mysql
+      DB_HOST: db # Utilisez le nom du service "db" comme hôte
+      DB_PORT: 3306
+      DB_DATABASE: airlux
+      DB_USERNAME: root
+      DB_PASSWORD: password
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    container_name: mysql_db
+    environment:
+      MYSQL_DATABASE: airlux
+      MYSQL_ROOT_PASSWORD: password # Mot de passe pour l'utilisateur root
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3307:3306" # Mappe le port 3306 du conteneur sur le port 3307 de l'hôte pour éviter les conflits
+    networks:
+      - laravel_network
+
+networks:
+  laravel_network:
+
+volumes:
+  db_data:
