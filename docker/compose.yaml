@@ -1,0 +1,11 @@
+version: '3.8'  # Spécifiez la version de Docker Compose
+
+services:
+  debian_service:
+    container_name: debian_raspbery
+    build:
+      context: .
+      dockerfile: raspbery.dockerfile 
+    volumes:
+      - ./register.sh:/home/register.sh
+    command: bash -c "/home/register.sh; tail -f /dev/null"
