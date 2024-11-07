@@ -1,3 +1,13 @@
+start_microservice() {
+    echo "Starting microservice..."
+    
+}
+
+
+
+
+
+
 HOST="hub.bzctoons.net"
 USER="register"
 API_REGISTER_ENDPOINT="http://$HOST/api/register"
