@@ -5,4 +5,5 @@ lsof \
 curl \
 autossh \
 supervisor \
+nginx
 
