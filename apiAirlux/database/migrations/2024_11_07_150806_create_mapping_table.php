@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('machines', function (Blueprint $table) {
-            $table->string('mac_address')->unique()->primary();
-            $table->text('ssh_key');
-            $table->string('last_ping');
+        Schema::create('mapping', function (Blueprint $table) {
+            $table->id();
+            $table->string('mac_address');
+            $table->foreign('mac_address')->references('mac_address')->on('machines');
+            $table->integer('port');
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('machines');
+        Schema::dropIfExists('mapping');
     }
 };

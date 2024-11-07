@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('machines', function (Blueprint $table) {
-            $table->string('mac_address')->unique()->primary();
-            $table->text('ssh_key');
-            $table->string('last_ping');
+        Schema::create('server_port', function (Blueprint $table) {
+            $table->id();
+            $table->integer('port');
+            $table->boolean('dispo');
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('machines');
+        Schema::dropIfExists('server_port');
     }
 };
