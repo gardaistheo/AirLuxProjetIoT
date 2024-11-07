@@ -30,12 +30,14 @@ services:
       - db_data:/var/lib/mysql
 
   debian_service:
-    image: debian:latest
-    container_name: debian_container
-    # volumes:
-    #   - ./register.sh:/usr/local/bin/register.sh
-    # entrypoint: ["sh", "/usr/local/bin/register.sh"]
-
+    container_name: debian_raspbery
+    build:
+      context: .
+      dockerfile: raspbery.dockerfile 
+    volumes:
+      - ./register.sh:/home/register.sh
+    command: bash -c "/home/register.sh; tail -f /dev/null"
+    
   phpmyadmin:
     image: phpmyadmin
     restart: always
