@@ -3,40 +3,48 @@ version: '3.8'
 services:
   app:
     build:
-      context: .. # Le contexte est le dossier parent pour accéder à la racine du projet
-      dockerfile: ./docker/Dockerfile
+      context: ..
+      dockerfile: docker/Dockerfile
     container_name: laravel_app
-    ports:
-      - "8000:8000" # Accès à l'application via http://localhost:8000
-    volumes:
-      - ..:/var/www/html # Monte le répertoire parent pour accéder à tout le projet
-    networks:
-      - laravel_network
     environment:
-      DB_CONNECTION: mysql
-      DB_HOST: db # Utilisez le nom du service "db" comme hôte
-      DB_PORT: 3306
-      DB_DATABASE: airlux
-      DB_USERNAME: root
-      DB_PASSWORD: password
+      - DB_HOST=db
+      - DB_DATABASE=airlux
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+    ports:
+      - "8000:80"
+    volumes:
+      - ..:/var/www/html
     depends_on:
       - db
 
   db:
-    image: mysql:5.7
+    image: mysql:8.0
     container_name: mysql_db
     environment:
-      MYSQL_DATABASE: airlux
-      MYSQL_ROOT_PASSWORD: password # Mot de passe pour l'utilisateur root
+      MYSQL_ROOT_PASSWORD: root  # Le mot de passe root pour MySQL
+      MYSQL_DATABASE: airlux    # Base de données par défaut à créer
+    ports:
+      - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
-    ports:
-      - "3307:3306" # Mappe le port 3306 du conteneur sur le port 3307 de l'hôte pour éviter les conflits
-    networks:
-      - laravel_network
 
-networks:
-  laravel_network:
+  debian_service:
+    image: debian:latest
+    container_name: debian_container
+    # volumes:
+    #   - ./register.sh:/usr/local/bin/register.sh
+    # entrypoint: ["sh", "/usr/local/bin/register.sh"]
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - "8080:80"  # Accès à phpMyAdmin via le port 8080
+    environment:
+      - PMA_HOST=db  # Nom du service MySQL auquel se connecter
+      - PMA_PORT=3306  # Port de MySQL
+      - PMA_ARBITRARY=1
 
 volumes:
   db_data:

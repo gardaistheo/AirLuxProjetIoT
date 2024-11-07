@@ -1,16 +1,17 @@
 FROM php:8.2-fpm
 
-# Installer les dépendances nécessaires pour PHP et Composer
+# Installer des extensions PHP nécessaires
 RUN apt-get update && apt-get install -y \
-    zip \
+    libpng-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
     libzip-dev \
-    unzip \
-    git \
-    curl \
-    && docker-php-ext-install zip
+    zip \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd pdo pdo_mysql zip
 
 # Installer Composer
-COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Définir le répertoire de travail
 WORKDIR /var/www/html
@@ -18,9 +19,10 @@ WORKDIR /var/www/html
 # Copier les fichiers de l'application dans le conteneur
 COPY . .
 
-# Installer les dépendances PHP via Composer (si composer.json existe)
-RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs
+# Installer les dépendances de Laravel
+RUN composer install --optimize-autoloader --no-dev && \
+    cp .env.example .env && \
+    php artisan key:generate
 
-EXPOSE 8000
-
-CMD ["php", "-S", "0.0.0.0:8000", "-t", "public"]
+# Droits d'accès pour Laravel
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
