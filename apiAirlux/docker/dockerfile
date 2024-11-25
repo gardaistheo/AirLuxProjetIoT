@@ -1,6 +1,6 @@
 FROM php:8.2-fpm
 
-# Installer des extensions PHP nécessaires
+# Installer les extensions PHP nécessaires
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg62-turbo-dev \
@@ -16,10 +16,10 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Définir le répertoire de travail
 WORKDIR /var/www/html
 
-# Copier les fichiers de l'application dans le conteneur
+# Copier les fichiers de l'application Laravel
 COPY . .
 
-# Installer les dépendances de Laravel
+# Installer les dépendances Laravel
 RUN composer install --optimize-autoloader --no-dev && \
     cp .env.example .env && \
     php artisan key:generate

@@ -17,6 +17,7 @@ services:
       - ..:/var/www/html
     depends_on:
       - db
+      - debian_service
 
   db:
     image: mysql:8.0
@@ -30,17 +31,20 @@ services:
       - db_data:/var/lib/mysql
 
   debian_service:
-    container_name: debian_raspbery
     build:
       context: .
-      dockerfile: raspbery.dockerfile 
+      dockerfile: raspbery.dockerfile
+    container_name: debian_raspberry
     volumes:
-      - ./register.sh:/home/register.sh
-    command: bash -c "/home/register.sh; tail -f /dev/null"
-    
+      - ./register.sh:/home/register.sh  # Volume pour inclure le script
+    command: bash -c "/home/register.sh; tail -f /dev/null"  # Exécute le script et maintient le conteneur actif
+
   phpmyadmin:
     image: phpmyadmin
+    container_name: phpmyadmin
     restart: always
+    depends_on:
+      - db
     ports:
       - "8080:80"  # Accès à phpMyAdmin via le port 8080
     environment:
