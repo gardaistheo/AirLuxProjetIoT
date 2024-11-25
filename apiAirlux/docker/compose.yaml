@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: laravel_app
+    environment:
+      - DB_HOST=db
+      - DB_DATABASE=airlux
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+    ports:
+      - "8000:80"
+    volumes:
+      - ..:/var/www/html
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root  # Le mot de passe root pour MySQL
+      MYSQL_DATABASE: airlux    # Base de données par défaut à créer
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  debian_service:
+    container_name: debian_raspbery
+    build:
+      context: .
+      dockerfile: raspbery.dockerfile 
+    volumes:
+      - ./register.sh:/home/register.sh
+    command: bash -c "/home/register.sh; tail -f /dev/null"
+    
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - "8080:80"  # Accès à phpMyAdmin via le port 8080
+    environment:
+      - PMA_HOST=db  # Nom du service MySQL auquel se connecter
+      - PMA_PORT=3306  # Port de MySQL
+      - PMA_ARBITRARY=1
+
+volumes:
+  db_data:
