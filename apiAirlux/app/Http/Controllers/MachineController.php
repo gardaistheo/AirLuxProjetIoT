@@ -4,32 +4,42 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Machine;
+use App\Controllers\MappingsController;
 
 class MachineController extends Controller
 {
-    public function store(Request $request)
+    public function register(Request $request)
     {
         $validatedData = $request->validate([
             'mac_address' => 'required|string',
-            'machine_port' => 'required|integer',
-            'server_port' => 'required|integer',
             'ssh_key' => 'required|string',
+            'given_ports' => 'required|string',
         ]);
 
         // Vérifier si une machine avec cette adresse MAC existe déjà
-        $updated = Machine::where('mac_address', $validatedData['mac_address'])
-                    ->update([
-                        'machine_port' => $validatedData['machine_port'],
-                        'server_port' => $validatedData['server_port'],
-                        'updated_at' => now(),
-                    ]);
+        $machineExiste = Machine::where('mac_address', $validatedData['mac_address']);
 
-        if (!$updated) {
+        if (!$machineExiste) {
             // Si aucune machine n'a été mise à jour, en créer une nouvelle
-            Machine::create($validatedData);
+            $newMachine = Machine::create([
+                'mac_address' => $validatedData['mac_address'],
+                'ssh_key' => $validatedData['ssh_key'],
+                'last_ping' => now(),
+            ]);
+
+            $machineExiste = $newMachine;
+
+            // Créer un mapping pour chaque port donné
+            MappingsController::setMapping($newMachine, $validatedData['given_ports']);
+        } else {
+            // Mettre à jour les mappings
+            MappingsController::updateMapping($machineExiste, $validatedData['given_ports']);
         }
 
-        return response()->json(['message' => 'Succès'], 200);
+        return response()->json([
+            'message' => 'Succès',
+            'machine' => $machineExiste
+        ], 200);
     }
 }
 

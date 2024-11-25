@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Machine extends Model
+class Mapping extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'mac_address',
-        'ssh_key',
-        'last_ping'
+        'server_port',
+        'machine_port'
     ];
 }
