@@ -7,6 +7,6 @@ use App\Http\Controllers\Controller;
 class PingController extends Controller
 {
     public function ping() {
-        return response()->json(['message' => 'pong'], 200);
+        return response()->json(['timestamp' => time()], 200);
     }
 }
