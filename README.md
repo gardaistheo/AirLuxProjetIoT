@@ -11,7 +11,8 @@
 
 ## Architecture Globale
 
-[Schèma d'architecture](documentation/architecture.png)
+![Schèma d'architecture](documentation/architecture.png "Schèma d'architecture").
+
 
 ## Versionning projet
 
