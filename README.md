@@ -9,6 +9,9 @@
 - [Server Public : ssh](#connexion-au-serveur-public-en-ssh)
 - [Environement : Docker](#docker)
 
+## Autres ressources :
+
+
 ## Architecture Globale
 
 ![Schema d'architecture](apiAirlux/documentation/architecture.png "Schema d'architecture").
@@ -21,9 +24,9 @@ Utilisation de ghithub comme hébergeur
 Bonne pratique pour collaborer sur le projet :
 
 - [Comment creer une nouvelle branche](documentation/Comment_creer_une_nouvelle_branche.md)
-- [developpement_fonctionnalites](documentation/developpement_fonctionnalites.md)
-- [gitflow_la_methodologie_et_la_pratique](documentation/gitflow_la_methodologie_et_la_pratique)
-- [resolution_de_conflits](documentation/resolution_de_conflits.md)
+- [Developpement fonctionnalites](documentation/developpement_fonctionnalites.md)
+- [Gitflow la methodologie et la pratique](documentation/gitflow_la_methodologie_et_la_pratique)
+- [Resolution de conflits](documentation/resolution_de_conflits.md)
 
 ## API
 
