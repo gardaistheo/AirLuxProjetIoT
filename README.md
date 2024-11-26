@@ -2,13 +2,31 @@
 
 ## Sommaire :
 
-- API : Laravel
-- Versionning : Git
-- Environement : Docker
+- [Architecture globale](#architecture-globale)
+- [Versionning : Git](#versionning-projet)
+- [API : Laravel](#api)
+- [Raspberry](#configuration-rasbery)
+- [Server Public : ssh](#connexion-au-serveur-public-en-ssh)
+- [Environement : Docker](#docker)
 
+## Architecture Globale
+
+[Schèma d'architecture](documentation/architecture.png)
+
+## Versionning projet
+
+Utilisation de ghithub comme hébergeur 
+
+Bonne pratique pour collaborer sur le projet :
+
+- [Comment creer une nouvelle branche](documentation/Comment_creer_une_nouvelle_branche.md)
+- [developpement_fonctionnalites](documentation/developpement_fonctionnalites.md)
+- [gitflow_la_methodologie_et_la_pratique](documentation/gitflow_la_methodologie_et_la_pratique)
+- [resolution_de_conflits](documentation/resolution_de_conflits.md)
 
 ## API
-### Route : /register
+
+### Route : `/register`
 
 La route /register permet d'enregister un nouvelle appareil.
 
@@ -95,18 +113,8 @@ Réponse attendue :
     "timestamp": 1701025076
 }
 
-## Versionning projet
 
-Utilisation de ghithub comme hébergeur 
-
-Bonne pratique pour collaborer sur le projet :
-
-- [Comment creer une nouvelle branche](documentation/Comment_creer_une_nouvelle_branche.md)
-- [developpement_fonctionnalites](documentation/developpement_fonctionnalites.md)
-- [gitflow_la_methodologie_et_la_pratique](documentation/gitflow_la_methodologie_et_la_pratique)
-- [resolution_de_conflits](documentation/resolution_de_conflits.md)
-
-### Améliorations possibles :
+##### Améliorations possibles :
    - Mettre en place les Merge request pour éviter les régressions ou conflits majeurs.
    - Créer une branche test.
    - Mettre en place des versions lors de maj de la branche production.
@@ -119,7 +127,7 @@ Bonne pratique pour collaborer sur le projet :
 
 ### Taches à faire:
  - Configurer le endpoint de l'api 
- - Installer  hypervisor pour gérer les micro-services en daemon. 
+ - Installer  supervisor pour gérer les micro-services en daemon. 
  - Installer différents micro-services avec des ports http et TCP
 
 ## Connexion au serveur public en ssh 
@@ -139,9 +147,9 @@ Bonne pratique pour collaborer sur le projet :
 
 Voici une version bien organisée et formatée pour un fichier .md :
 
-# Docker
+## Docker
 
-## Création des containers
+### Création des containers
 
 - **Nginx**  
   Un container pour gérer le serveur web.  
@@ -151,7 +159,7 @@ Voici une version bien organisée et formatée pour un fichier .md :
 
 ---
 
-## Difficultés rencontrées
+### Difficultés rencontrées
 
 ### Problème : container Laravel
 - Lors du `docker compose build`, une erreur est survenue.
@@ -159,7 +167,7 @@ Voici une version bien organisée et formatée pour un fichier .md :
 
 ---
 
-## Commandes utiles
+### Commandes utiles
 
 ### Lancer les containers :
 ```bash
@@ -167,17 +175,18 @@ docker compose up
 ```
 Arrêter les containers :
 
+```bash
 docker compose down
-
+```
 Port
 
-	•	Le serveur est accessible sur le port 8000.
+  - Le serveur est accessible sur le port 8000.
 
 To-Do
 
-	•	Créer un container Laravel pour que les collègues puissent travailler.
+  -	Créer un container Laravel pour que les collègues puissent travailler.
 
 Note personnelle
 
-	PS : Je retarde tout, je crois :/
+  PS : Je retarde tout, je crois :/
 
