@@ -9,12 +9,9 @@
 - [Server Public : ssh](#connexion-au-serveur-public-en-ssh)
 - [Environement : Docker](#docker)
 
-## Autres ressources :
-
-
 ## Architecture Globale
 
-![Schema d'architecture](apiAirlux/documentation/architecture.png "Schema d'architecture").
+![Schema d'architecture](apiAirlux/documentation/architecture.png "Schema d'architecture")
 
 
 ## Versionning projet
@@ -23,10 +20,10 @@ Utilisation de ghithub comme hébergeur
 
 Bonne pratique pour collaborer sur le projet :
 
-- [Comment creer une nouvelle branche](documentation/Comment_creer_une_nouvelle_branche.md)
-- [Developpement fonctionnalites](documentation/developpement_fonctionnalites.md)
-- [Gitflow la methodologie et la pratique](documentation/gitflow_la_methodologie_et_la_pratique)
-- [Resolution de conflits](documentation/resolution_de_conflits.md)
+- [Comment creer une nouvelle branche](apiAirlux/documentation/Comment_creer_une_nouvelle_branche.md)
+- [Developpement fonctionnalites](apiAirlux/documentation/developpement_fonctionnalites.md)
+- [Gitflow la methodologie et la pratique](apiAirlux/documentation/gitflow_la_methodologie_et_la_pratique)
+- [Resolution de conflits](apiAirlux/documentation/resolution_de_conflits.md)
 
 ## API
 
@@ -101,22 +98,25 @@ class PingController extends Controller
 À faire (To-Do)
 
 1.Tester que l’API renvoie bien le timestamp
-•Envoyer une requête à la route /ping.
-•Vérifier que la réponse contient un champ "timestamp" avec une valeur correcte (par exemple, en utilisant Postman ou cURL).
+- Envoyer une requête à la route /ping.
+- Vérifier que la réponse contient un champ "timestamp" avec une valeur correcte (par exemple, en utilisant Postman ou cURL).
+
 2.Mettre à jour la base de données
-•Identifier la table et le champ à mettre à jour (exemple : last_ping dans une table devices).
-•Implémenter la logique pour insérer le timestamp reçu dans la base de données.
+- Identifier la table et le champ à mettre à jour (exemple : last_ping dans une table devices).
+- Implémenter la logique pour insérer le timestamp reçu dans la base de données.
 
-Exemple de test avec cURL
+Exemple de test avec cURL : 
 
+```bash
 curl -X GET http://domaine/api/ping
-
+```
 Réponse attendue :
 
+```json
 {
     "timestamp": 1701025076
 }
-
+```
 
 ##### Améliorations possibles :
    - Mettre en place les Merge request pour éviter les régressions ou conflits majeurs.
