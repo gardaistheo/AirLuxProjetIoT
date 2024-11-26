@@ -1,66 +1,174 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## API
+### Route : /register
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+La route /register permet d'enregister un nouvelle appareil.
 
-## About Laravel
+Si l'appareil existe en base : 
+- L'api met à jour la table mapping, cette table permet de savoir quel port de la machine est connecté à quel port du server. 
+- L'api met aussi à jour la table server port qui permet de savoir quel port est disponible et que port est indisponible.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Si l'apareil n'existe pas en base : 
+- L'api créer la machine en base.
+- Créer le mapping des ports.
+- Met à jour les ports disponibles.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Dans les 2 cas l'api renvoie ensuite la liste des ports attribués
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Quand une machine accède à la route register, alors l'api doit mettre à jour la liste des clés ssh du server.
 
-## Learning Laravel
+#### Les difficultés rencontrées
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+##### 1 - Le server se lance mais se ferme au bout d'environ 10 seconde.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+###### Problème
+Effectivement il m'est arrivé que lorsque je lance le server il s'éteigne tout seul au boût d'environ 10 secondes voir moins. Lorsque le server est lancé il affiche une erreur pour dire qu'il ne trouve pas le fichier server.php dans le dossier :
+```path
+apiAirlux\vendor\laravel\framework\src\Illuminate\Console\resources\server.php
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+###### Solution
+J'avais Avast antivirus.. Depuis que je l'ai supprimé mes problèmes se sont envolés et vous devriez faire pareil. Plus serieusement faite attention si vous avez le même genre de problème pensez à désactiver votre antivirus. 
 
-## Laravel Sponsors
+Une autre solution aurait été la commande :
+```bash
+composer update
+```
+Pour etre sur que l'installation du dossier /vendor est correcte.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Route : `/ping` 
 
-### Premium Partners
+La route `/ping` est conçue pour renvoyer un **timestamp**. Ce timestamp peut être utilisé pour mettre à jour la base de données, en remplaçant le timestamp du dernier ping.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+---
 
-## Contributing
+#### Objectif
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Permettre de récupérer un timestamp via une requête à l'API.
+- Utiliser ce timestamp pour mettre à jour le champ du dernier ping dans la base de données.
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+#### Fonctionnement
 
-## Security Vulnerabilities
+##### Code de la route `/ping`
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```php
+<?php
 
-## License
+namespace App\Http\Controllers;
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+use App\Http\Controllers\Controller;
+
+class PingController extends Controller
+{
+    public function ping() {
+        return response()->json(['timestamp' => time()], 200);
+    }
+}
+```
+
+À faire (To-Do)
+
+1.Tester que l’API renvoie bien le timestamp
+•Envoyer une requête à la route /ping.
+•Vérifier que la réponse contient un champ "timestamp" avec une valeur correcte (par exemple, en utilisant Postman ou cURL).
+2.Mettre à jour la base de données
+•Identifier la table et le champ à mettre à jour (exemple : last_ping dans une table devices).
+•Implémenter la logique pour insérer le timestamp reçu dans la base de données.
+
+Exemple de test avec cURL
+
+curl -X GET http://domaine/api/ping
+
+Réponse attendue :
+
+{
+    "timestamp": 1701025076
+}
+
+## Versionning projet
+
+Utilisation de ghithub comme hébergeur 
+
+Bonne pratique pour collaborer sur le projet :
+
+- [Comment creer une nouvelle branche](documentation/Comment_creer_une_nouvelle_branche.md)
+- [developpement_fonctionnalites](documentation/developpement_fonctionnalites.md)
+- [gitflow_la_methodologie_et_la_pratique](documentation/gitflow_la_methodologie_et_la_pratique)
+- [resolution_de_conflits](documentation/resolution_de_conflits.md)
+
+### Améliorations possibles :
+   - Mettre en place les Merge request pour éviter les régressions ou conflits majeurs.
+   - Créer une branche test.
+   - Mettre en place des versions lors de maj de la branche production.
+
+
+## Configuration Rasbery
+
+- Dans le fichier compose.yaml, création d'une image débian  nommée Debian_Rasbery dans le dossier docker/compose.yaml
+- Ajout script bash  register.sh pour attiter des ports public  lors de la première connexion  de la Rasbery au serveur public.
+
+### Taches à faire:
+ - Configurer le endpoint de l'api 
+ - Installer  hypervisor pour gérer les micro-services en daemon. 
+ - Installer différents micro-services avec des ports http et TCP
+
+## Connexion au serveur public en ssh 
+
+- Générer  en local  sa clé publique et privée à l'aide de la commande :
+``` 
+        ssh-keygen 
+```
+ par défaut le protocole utilisé est RSA
+
+- Copier la clé publique du local vers  le serveur  en utilisant la commande :
+```
+        ssh-copy-id utilisateur_distant@adresse_IP_distante
+```
+- la clé publique sera automatiquement ajoutée dans le fichier authorized_keys
+- Il serait intéressant de créer et de paramétrer un fichier de configuration  pour personnaliser et améliorer le client SSH.
+
+Voici une version bien organisée et formatée pour un fichier .md :
+
+# Docker
+
+## Création des containers
+
+- **Nginx**  
+  Un container pour gérer le serveur web.  
+
+- **PHP**  
+  Un container pour exécuter les scripts PHP.
+
+---
+
+## Difficultés rencontrées
+
+### Problème : container Laravel
+- Lors du `docker compose build`, une erreur est survenue.
+- Hypothèse : le problème pourrait venir du fichier `Dockerfile`.
+
+---
+
+## Commandes utiles
+
+### Lancer les containers :
+```bash
+docker compose up
+```
+Arrêter les containers :
+
+docker compose down
+
+Port
+
+	•	Le serveur est accessible sur le port 8000.
+
+To-Do
+
+	•	Créer un container Laravel pour que les collègues puissent travailler.
+
+Note personnelle
+
+	PS : Je retarde tout, je crois :/
+
