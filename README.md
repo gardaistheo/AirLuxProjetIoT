@@ -136,8 +136,8 @@ Réponse attendue :
 
 ### Taches à faire:
  - [ ] Configurer le endpoint de l'api 
- - [ ] Installer  supervisor pour gérer les services qui seront exposés. 
- - [ ] Installer différents services avec des ports http et TCP
+ - [x] Installer  supervisor pour gérer les services qui seront exposés. 
+ - [x] Installer différents services avec des ports http et TCP
 
 ## Connexion au serveur public en ssh 
 
