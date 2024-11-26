@@ -63,6 +63,10 @@ composer update
 ```
 Pour etre sur que l'installation du dossier /vendor est correcte.
 
+#### To-Do
+- [x] Poser la logique de la route
+- [ ] Acceder à la route 
+- [ ] Faire fonctionner la route (ajout des données en base)
 ### Route : `/ping` 
 
 La route `/ping` est conçue pour renvoyer un **timestamp**. Ce timestamp peut être utilisé pour mettre à jour la base de données, en remplaçant le timestamp du dernier ping.
@@ -98,12 +102,12 @@ class PingController extends Controller
 À faire (To-Do)
 
 1.Tester que l’API renvoie bien le timestamp
-- Envoyer une requête à la route /ping.
-- Vérifier que la réponse contient un champ "timestamp" avec une valeur correcte (par exemple, en utilisant Postman ou cURL).
+- [ ] Envoyer une requête à la route /ping.
+- [ ] Vérifier que la réponse contient un champ "timestamp" avec une valeur correcte (par exemple, en utilisant Postman ou cURL).
 
 2.Mettre à jour la base de données
-- Identifier la table et le champ à mettre à jour (exemple : last_ping dans une table devices).
-- Implémenter la logique pour insérer le timestamp reçu dans la base de données.
+- [ ] Identifier la table et le champ à mettre à jour (exemple : last_ping dans une table devices).
+- [ ] Implémenter la logique pour insérer le timestamp reçu dans la base de données.
 
 Exemple de test avec cURL : 
 
@@ -130,9 +134,9 @@ Réponse attendue :
 - Ajout script bash  register.sh pour attiter des ports public  lors de la première connexion  de la Rasbery au serveur public.
 
 ### Taches à faire:
- - Configurer le endpoint de l'api 
- - Installer  supervisor pour gérer les micro-services en daemon. 
- - Installer différents micro-services avec des ports http et TCP
+ - [ ] Configurer le endpoint de l'api 
+ - [ ] Installer  supervisor pour gérer les micro-services en daemon. 
+ - [ ] Installer différents micro-services avec des ports http et TCP
 
 ## Connexion au serveur public en ssh 
 
@@ -188,7 +192,7 @@ Port
 
 To-Do
 
-  -	Créer un container Laravel pour que les collègues puissent travailler.
+  - [ ]	Créer un container Laravel pour que les collègues puissent travailler.
 
 Note personnelle
 
