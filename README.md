@@ -11,7 +11,7 @@
 
 ## Architecture Globale
 
-![Schèma d'architecture](documentation/architecture.png "Schèma d'architecture").
+![Schèma d'architecture](apiAirlux\documentation\architecture.png "Schèma d'architecture").
 
 
 ## Versionning projet
