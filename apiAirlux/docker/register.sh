@@ -1,8 +1,33 @@
-start_microservice() {
+start_service() {
     echo "Starting microservice..."
+        
+    # Vérifie que Supervisor est actif
+   sudo systemctl start supervisor 
+   if [ $? -eq 0 ]; then 
+        echo "Supervisor is started."
+        
+    else 
+        echo "Failed to  don't start Supervisor."
+        
+    fi
+    sudo systemctl start nginx
+      if [ $? -eq 0 ]; then 
+        echo "nginx is started."
+        
+    else 
+        echo "nginx Failed ."
+        
+    fi
+
     
+    
+    # Démarre le microservice
+    #supervisorctl start nom_du_microservice || { echo "Failed to start microservice"; return 1; }
+
+    echo "Microservice started successfully."
 }
 
+start_service
 
 
 
