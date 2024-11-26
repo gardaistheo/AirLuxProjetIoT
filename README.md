@@ -8,6 +8,7 @@
 - [Raspberry](#configuration-rasbery)
 - [Server Public : ssh](#connexion-au-serveur-public-en-ssh)
 - [Environement : Docker](#docker)
+- [Architecture Base de Donnée : MySql](#architecture-de-base-de-données)
 
 ## Architecture Globale
 
@@ -198,3 +199,8 @@ Note personnelle
 
   PS : Je retarde tout, je crois :/
 
+## Architecture de Base de Données
+
+![Structure Base de Donnée](apiAirlux/documentation/structureBDD.png "Structure Base de Donnée")
+
+Vous pouvez aussi suivre [ce lien](https://www.notion.so/6ac655df33a44836aeef01e4056a4ee3?v=9fdcd77b65604064a43957e4adb4cd58&p=137a89b0cc0080c9b050e008037f86df&pm=s) pour en savoir plus 
