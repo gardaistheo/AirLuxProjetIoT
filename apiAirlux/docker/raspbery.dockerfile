@@ -10,11 +10,13 @@ autossh \
 supervisor \
 nginx \
 systemctl \
-net-tools
+net-tools \
+nano \
+openssh-server
 
 # Créer le répertoire pour les logs de Supervisor
 RUN mkdir -p /var/log/supervisor
 
 COPY ./conf/nginx.conf /etc/supervisor/conf.d/nginx.conf
-
+COPY ./conf/ssh.conf /etc/supervisor/conf.d/ssh.conf
 

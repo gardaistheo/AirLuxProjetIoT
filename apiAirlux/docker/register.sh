@@ -18,13 +18,16 @@ start_service() {
         echo "nginx Failed ."
         
     fi
+     sudo systemctl start ssh
+      if [ $? -eq 0 ]; then 
+        echo "ssh is started."
+        
+    else 
+        echo "ssh Failed ."
+        
+    fi
 
-    
-    
-    # Démarre le microservice
-    #supervisorctl start nom_du_microservice || { echo "Failed to start microservice"; return 1; }
-
-    echo "Microservice started successfully."
+    echo "Service started successfully."
 }
 
 start_service
