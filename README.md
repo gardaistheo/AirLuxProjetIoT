@@ -136,8 +136,8 @@ Réponse attendue :
 
 ### Taches à faire:
  - [ ] Configurer le endpoint de l'api 
- - [ ] Installer  supervisor pour gérer les micro-services en daemon. 
- - [ ] Installer différents micro-services avec des ports http et TCP
+ - [ ] Installer  supervisor pour gérer les services qui seront exposés. 
+ - [ ] Installer différents services avec des ports http et TCP
 
 ## Connexion au serveur public en ssh 
 
