@@ -17,6 +17,11 @@ return new class extends Migration
             $table->string('last_ping');
             $table->timestamps();
         });
+
+        // Appeler le seeder après la création de la table
+        Artisan::call('db:seed', [
+            '--class' => 'MachineSeeder',
+        ]);
     }
 
     /**

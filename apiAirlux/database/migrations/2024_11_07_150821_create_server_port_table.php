@@ -11,12 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('server_port', function (Blueprint $table) {
+        Schema::create('server_ports', function (Blueprint $table) {
             $table->id();
             $table->integer('port');
             $table->boolean('dispo');
             $table->timestamps();
         });
+
+        // Appeler le seeder après la création de la table
+        Artisan::call('db:seed', [
+            '--class' => 'ServerPortsSeeder',
+        ]);
+        
     }
 
     /**

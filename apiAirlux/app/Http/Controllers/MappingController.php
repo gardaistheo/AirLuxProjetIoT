@@ -7,10 +7,12 @@ use App\Models\Mapping;
 use App\Models\ServerPorts;
 use App\Models\Machine;
 use App\Http\Controllers\ServerPortsController;
+use Illuminate\Support\Facades\Log;
+
 
 class MappingController extends Controller
 {
-    public function setMapping($machine, $given_ports)
+    public static function setMapping($machine, $given_ports)
     {
         $createdMappings = [];
         // Récupérer les ports qui ont le champ disponible à true
@@ -21,24 +23,25 @@ class MappingController extends Controller
             return response()->json(['message' => 'Aucun port disponible'], 400);
         } else {
             // On récupère tout les ports demandés par la machine
-            $ports = explode(",", $given_ports);
+            $ports_demande = explode(",", $given_ports);
+            // On récupère un port disponible
+            $ports_dispo = ServerPorts::where('dispo', true)->get();
 
             // Pour chaque port demandé, on crée un mapping
-            for ($i = 0; $i < count($ports); $i++) {
+            for ($i = 0; $i < count($ports_demande); $i++) {
                 // On récupère un port disponible
-                $port = ServerPorts::where('dispo', true)->first();
-
+                $port_dispo = $ports_dispo[$i];
                 // On crée un mapping
                 $mapping = new Mapping();
                 $mapping->mac_address = $machine->mac_address;
-                $mapping->server_port = $port->port;
-                $mapping->machine_port = $ports[$i];
+                $mapping->server_port = $port_dispo->port;
+                $mapping->machine_port = intval($ports_demande[$i]);
                 $mapping->save();
                 array_push($createdMappings, $mapping);
 
                 // On met le port à non disponible
-                $port->dispo = false;
-                $port->save();
+                $port_dispo->dispo = false;
+                $port_dispo->save();
             }
         }
 
@@ -48,18 +51,20 @@ class MappingController extends Controller
         ], 200);
     }
 
-    public function updateMapping($machine, $given_ports)
+    public static function updateMapping($machine, $given_ports)
     {
+        Log::info('\UPDATE MAPPING');
         $createdMappings = [];
         $deletedMappings = [];
 
         //Récuperer les mappings de la machine
-        $mappings = Mapping::where('mac_address', $machine->mac_address);
+        $mappings = Mapping::where('mac_address', $machine->mac_address)->get();
 
         //Supprimer les mappings
         for($i = 0; $i < count($mappings); $i++){
             //Récuperer le port du serveur
-            $port = ServerPorts::where('port', $mappings[$i]->server_port);
+            $port = ServerPorts::where('port', $mappings[$i]->server_port)->first();
+            Log::info('Port trouvé : '. $port);
             //Mettre le port à disponible
             $port->dispo = true;
             $port->save();
@@ -68,21 +73,24 @@ class MappingController extends Controller
             $mappings[$i]->delete();
         }
 
+        Log::info('Mappings supprimés ');
+
         //On récupère tout les ports demandés par la machine
         $ports = $machine->ports;
         $ports = explode(",", $ports);
+        //On récupère un port disponible
+        $ports_dispo = ServerPorts::where('dispo', true)->get();
 
 
         //Pour chaque port demandé, on crée un mapping
         for($i = 0; $i < count($ports); $i++){
             //On récupère un port disponible
-            $port = ServerPorts::where('dispo', true)->first();
-
+            $port = $ports_dispo[$i];
             //On crée un mapping
             $mapping = new Mapping();
             $mapping->mac_address = $machine->mac_address;
             $mapping->server_port = $port->port;
-            $mapping->machine_port = $ports[$i];
+            $mapping->machine_port = intval($ports[$i]);
             $mapping->save();
             array_push($createdMappings, $mapping);
 

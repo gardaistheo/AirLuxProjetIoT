@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mapping', function (Blueprint $table) {
+        Schema::create('mappings', function (Blueprint $table) {
             $table->id();
             $table->string('mac_address');
             $table->foreign('mac_address')->references('mac_address')->on('machines');
@@ -20,6 +20,10 @@ return new class extends Migration
             $table->integer('machine_port');
             $table->timestamps();
         });
+        // Appeler le seeder après la création de la table
+        Artisan::call('db:seed', [
+            '--class' => 'MappingSeeder',
+        ]);
     }
 
     /**
