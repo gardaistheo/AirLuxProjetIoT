@@ -6,6 +6,9 @@ use App\Http\Controllers\MachineController;
 
 Route::post('/register', [MachineController::class, 'register']);
 
+Route::post('/ping', [MachineController::class, 'ping']);
+
+
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
