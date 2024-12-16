@@ -59,5 +59,32 @@ class MachineController extends Controller
             'machine' => $machineExiste
         ], 200);
     }
+
+    public function ping(Request $request)
+    {
+        // Valider les données
+        $validatedData = $request->validate([
+            'mac_address' => 'required|string',
+        ]);
+
+        // Vérifier si une machine avec cette adresse MAC existe déjà
+        $machineExiste = Machine::where('mac_address', $validatedData['mac_address'])->first();
+
+        if ($machineExiste) {
+            // Mettre à jour la date du dernier ping
+            $machineExiste->last_ping = now();
+            $machineExiste->save();
+
+            return response()->json([
+                'message' => 'Succès',
+                'machine' => $machineExiste
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Erreur',
+                'error' => 'Aucune machine avec cette adresse MAC n\'a été trouvée'
+            ], 404);
+        }
+    }
 }
 
