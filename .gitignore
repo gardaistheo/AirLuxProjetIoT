@@ -6,7 +6,6 @@ apiAirlux/public/storage
 apiAirlux/storage/*.key
 apiAirlux/storage/pail
 apiAirlux/vendor
-apiAirlux/.env
 apiAirlux/.env.backup
 apiAirlux/.env.production
 apiAirlux/.phpactor.json

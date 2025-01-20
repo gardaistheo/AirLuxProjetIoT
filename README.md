@@ -26,6 +26,19 @@ Bonne pratique pour collaborer sur le projet :
 - [Gitflow la methodologie et la pratique](apiAirlux/documentation/gitflow_la_methodologie_et_la_pratique)
 - [Resolution de conflits](apiAirlux/documentation/resolution_de_conflits.md)
 
+## Procédure de lancement
+
+```bash
+docker compose build
+```
+
+```bash
+docker compose up
+```
+
+Ajouter la collection a postman : apiAirlux/tests/postman/ProjetIoT.postman_collection.json
+
+
 ## API
 
 ### Route : `/register`
@@ -135,7 +148,7 @@ Réponse attendue :
 - Ajout script bash  register.sh pour attiter des ports public  lors de la première connexion  de la Rasbery au serveur public.
 
 ### Taches à faire:
- - [x] Configurer le endpoint de l'api 
+ - [ ] Configurer le endpoint de l'api 
  - [x] Installer  supervisor pour gérer les services qui seront exposés. 
  - [x] Installer différents services avec des ports http et TCP
 
