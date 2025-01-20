@@ -1,0 +1,64 @@
+{
+	"info": {
+		"_postman_id": "889d0618-771b-47b7-82e5-a5775946b943",
+		"name": "ProjetIoT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "32988985"
+	},
+	"item": [
+		{
+			"name": "NouvelleMachine",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"mac_address\" : \"ijid2937DZU\",\r\n    \"ssh_key\" : \"5\",\r\n    \"given_ports\" : \"12,25,33,58\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://127.0.0.1:8000/api/register"
+			},
+			"response": []
+		},
+		{
+			"name": "MachineExistante",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"mac_address\" : \"exampleMacAddress\",\r\n    \"ssh_key\" : \"exampleModified\",\r\n    \"given_ports\" : \"11,12,13,14\"\r\n\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://127.0.0.1:8000/api/register"
+			},
+			"response": []
+		},
+		{
+			"name": "Ping",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"mac_address\" : \"exampleMacAddress\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://127.0.0.1:8000/api/ping"
+			},
+			"response": []
+		}
+	]
+}
