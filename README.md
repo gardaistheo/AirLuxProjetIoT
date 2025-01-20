@@ -66,8 +66,8 @@ Pour etre sur que l'installation du dossier /vendor est correcte.
 
 #### To-Do
 - [x] Poser la logique de la route
-- [ ] Acceder à la route 
-- [ ] Faire fonctionner la route (ajout des données en base)
+- [x] Acceder à la route 
+- [x] Faire fonctionner la route (ajout des données en base)
 ### Route : `/ping` 
 
 La route `/ping` est conçue pour renvoyer un **timestamp**. Ce timestamp peut être utilisé pour mettre à jour la base de données, en remplaçant le timestamp du dernier ping.
@@ -103,12 +103,12 @@ class PingController extends Controller
 À faire (To-Do)
 
 1.Tester que l’API renvoie bien le timestamp
-- [ ] Envoyer une requête à la route /ping.
-- [ ] Vérifier que la réponse contient un champ "timestamp" avec une valeur correcte (par exemple, en utilisant Postman ou cURL).
+- [x] Envoyer une requête à la route /ping.
+- [x] Vérifier que la réponse contient un champ "timestamp" avec une valeur correcte (par exemple, en utilisant Postman ou cURL).
 
 2.Mettre à jour la base de données
-- [ ] Identifier la table et le champ à mettre à jour (exemple : last_ping dans une table devices).
-- [ ] Implémenter la logique pour insérer le timestamp reçu dans la base de données.
+- [x] Identifier la table et le champ à mettre à jour (exemple : last_ping dans une table devices).
+- [x] Implémenter la logique pour insérer le timestamp reçu dans la base de données.
 
 Exemple de test avec cURL : 
 
@@ -135,7 +135,7 @@ Réponse attendue :
 - Ajout script bash  register.sh pour attiter des ports public  lors de la première connexion  de la Rasbery au serveur public.
 
 ### Taches à faire:
- - [ ] Configurer le endpoint de l'api 
+ - [x] Configurer le endpoint de l'api 
  - [x] Installer  supervisor pour gérer les services qui seront exposés. 
  - [x] Installer différents services avec des ports http et TCP
 
@@ -179,25 +179,29 @@ Voici une version bien organisée et formatée pour un fichier .md :
 ### Commandes utiles
 
 ### Lancer les containers :
+
+```bash
+docker compose build
+```
+
 ```bash
 docker compose up
 ```
-Arrêter les containers :
+
+### Arrêter les containers :
 
 ```bash
 docker compose down
 ```
+
 Port
 
   - Le serveur est accessible sur le port 8000.
 
 To-Do
 
-  - [ ]	Créer un container Laravel pour que les collègues puissent travailler.
+  - [x]	Créer un container Laravel pour que les collègues puissent travailler.
 
-Note personnelle
-
-  PS : Je retarde tout, je crois :/
 
 ## Architecture de Base de Données
 
