@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('mac_address');
             $table->foreign('mac_address')->references('mac_address')->on('machines');
-            $table->integer('server_port');
-            $table->foreign('server_port')->references('id')->on('server_port');
+            $table->unsignedBigInteger('server_port');
+            $table->foreign('server_port')->references('id')->on('server_ports');
             $table->integer('machine_port');
             $table->timestamps();
         });
